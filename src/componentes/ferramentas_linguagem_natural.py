@@ -89,7 +89,7 @@ class FerramentasLinguagemNatural:
     
     #A primeira forma de gerar uma nuvem de palavras a partir de uma Series do Pandas
     @staticmethod
-    def gerarNuvemPalavras(series, stopwords):        
+    def gerarNuvemPalavras(series):        
         
         #Junta a Series inteira como string separada por espaço
         palavras = series.str.cat(sep=' ')
