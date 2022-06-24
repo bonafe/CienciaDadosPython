@@ -607,13 +607,13 @@ class FerramentasLinguagemNatural:
         <script>
             require.config({
                 paths: {
-                    d3: 'https://bonafe.github.io/TCC_BigData_PucMinas/src/componentes/html/bibliotecas/d3.v5.min'
+                    d3: 'https://bonafe.github.io/CienciaDadosPython/TCC_BigData_PucMinas/src/componentes/html/bibliotecas/d3.v5.min'
                 }
             });
         </script>
         """))
 
-        FerramentasLinguagemNatural.html_nuvem_palavras_treemap = urlopen("https://bonafe.github.io/TCC_BigData_PucMinas/src/componentes/html/NuvemPalavrasTreeMap.js").read().decode("utf-8") 
+        FerramentasLinguagemNatural.html_nuvem_palavras_treemap = urlopen("https://bonafe.github.io/CienciaDadosPython/src/componentes/html/NuvemPalavrasTreeMap.js").read().decode("utf-8") 
 
             
         FerramentasLinguagemNatural.html_template = Template('''    

@@ -97,7 +97,7 @@ class VisualizadorDataFrames:
         <script>
             require.config({
                 paths: {
-                    vis: 'https://bonafe.github.io/TCC_BigData_PucMinas/src/componentes/html/bibliotecas/vis-network.min'
+                    vis: 'https://bonafe.github.io/CienciaDadosPython/src/componentes/html/bibliotecas/vis-network.min'
                 }
             });
         </script>
@@ -106,7 +106,7 @@ class VisualizadorDataFrames:
         #with open('./html/GrafoBases.js') as f:
         #    self.html_grafo_bases = " ".join(f.readlines())
         
-        self.html_grafo_bases = urlopen("https://bonafe.github.io/TCC_BigData_PucMinas/src/componentes/html/GrafoBases.js").read().decode("utf-8") 
+        self.html_grafo_bases = urlopen("https://bonafe.github.io/CienciaDadosPython/src/componentes/html/GrafoBases.js").read().decode("utf-8") 
 
         self.html_template = Template('''    
             <script>
