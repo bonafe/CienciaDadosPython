@@ -607,7 +607,7 @@ class FerramentasLinguagemNatural:
         <script>
             require.config({
                 paths: {
-                    d3: 'https://bonafe.github.io/CienciaDadosPython/TCC_BigData_PucMinas/src/componentes/html/bibliotecas/d3.v5.min'
+                    d3: 'https://bonafe.github.io/CienciaDadosPython/CienciaDadosPython/src/componentes/html/bibliotecas/d3.v5.min'
                 }
             });
         </script>
