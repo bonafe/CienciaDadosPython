@@ -524,7 +524,7 @@ class FerramentasLinguagemNatural:
         
         
     @staticmethod
-    def exibirClusters(df, coluna, coluna_cluster, titulo, treemap=True, lista_stopwords=None):
+    def exibirClusters(df, coluna, coluna_cluster, titulo, treemap=True, lista_stopwords=None, imagens_separadas=False):
             
             #Carrega as stopwords padrão e amplia a lista de stopwords caso tenham sido enviadas na opções
             stopwords_ampliada = FerramentasLinguagemNatural.carregarStopwords(lista_stopwords)
@@ -578,15 +578,17 @@ class FerramentasLinguagemNatural:
                     "nuvens":dados
                 })
                 display(HTML(FerramentasLinguagemNatural.html_template.substitute({'script_nuvem_palavras_treemap':FerramentasLinguagemNatural.html_nuvem_palavras_treemap, 'dados':dados_str})))
+
                 
-            else:
+            elif not imagens_separadas:
+                
                 quantidade_colunas = 4
                 quantidade_linhas = int(math.ceil(quantidade_clusters / quantidade_colunas))
 
                 fig = plt.figure(figsize=(16,24))
 
-                fig.suptitle("Nuvem de palavras dos Clusters", fontsize=20)
-
+                fig.suptitle("Nuvem de palavras dos Clusters", fontsize=20)                
+                
                 for elemento in dados["elementos"]:
                     
                     ax = fig.add_subplot(quantidade_linhas, quantidade_colunas, elemento["id"]+1)
@@ -595,8 +597,22 @@ class FerramentasLinguagemNatural:
                     ax.axis("off")
 
                 fig.tight_layout(pad=1.5)
-
+                fig.patch.set_facecolor('white')
+                
                 plt.show()                                                            
+            
+            
+            else:
+                                
+                for elemento in dados["elementos"]:
+                    
+                    fig, ax = plt.subplots(figsize=(5, 4))
+                    ax.set_title(elemento["titulo"])
+                    fig.patch.set_facecolor('white')
+                    plt.imshow(elemento["imagem"], interpolation="bilinear")                            
+                    plt.axis('off')                    
+                    plt.show() 
+                     
         
         
         
