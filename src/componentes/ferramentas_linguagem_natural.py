@@ -422,16 +422,10 @@ class FerramentasLinguagemNatural:
             
         #Remove os registros da coluna de texto com valor nulo
         lista_texto = df[df[coluna_texto].notna()][coluna_texto].unique() 
-            
-            
-        stopwords = None
-        
-        if 'stopwords' in opcoes:
-            
-            stopwords = opcoes['stopwords']
+                        
             
         #Transforma a lista com o textos dos registros em uma matriz TFIDF
-        matrizTFIDF, fittedVectorizer = FerramentasLinguagemNatural.gerarMatrizTFIDF (lista_texto, stopwords)        
+        matrizTFIDF, fittedVectorizer = FerramentasLinguagemNatural.gerarMatrizTFIDF (lista_texto, opcoes)        
                                         
         
         [quantidade_clusters] = FerramentasLinguagemNatural.carregarOpcoesKMeans(opcoes) 
