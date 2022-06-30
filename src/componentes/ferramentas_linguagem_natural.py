@@ -525,11 +525,16 @@ class FerramentasLinguagemNatural:
             
             quantidade_clusters = df[coluna_cluster].nunique()
             
+            quantidade_total_registros = df[coluna_cluster].count()
+            
+            
             dados = {"elementos":[]}
                                 
             for cluster_atual in range(0, quantidade_clusters):
                 
                 df_cluster_atual = df[df[coluna_cluster] == cluster_atual]
+            
+                quantidade_registros_cluster_atual = df_cluster_atual[coluna_cluster].count()
             
                 texto = df_cluster_atual[coluna].str.cat(sep=' ')
                 
@@ -541,18 +546,15 @@ class FerramentasLinguagemNatural:
                     stopwords=stopwords_ampliada,
                     max_font_size=50, 
                     max_words=100, 
-                    background_color="white").generate(texto)
-            
-                #print('Cluster: {}'.format(cluster_atual))
+                    background_color="white").generate(texto)                            
 
-                textos = df[df[coluna_cluster] == cluster_atual][coluna]
-            
-                #print(f'Número de Textos: {len(textos)}')
+                textos = df[df[coluna_cluster] == cluster_atual][coluna]                        
                         
                 elemento = {
                     "id":cluster_atual,
                     "titulo": f'Cluster {cluster_atual}',
-                    "qtd_registros": len(textos)                    
+                    "qtd_registros": quantidade_registros_cluster_atual,
+                    "percentual_registros": quantidade_registros_cluster_atual / quantidade_total_registros
                 }
                 
                 if (treemap):                    
@@ -562,50 +564,57 @@ class FerramentasLinguagemNatural:
                 else:
                     elemento["imagem"] = nuvem_palavras
                     
-                dados["elementos"].append(elemento)
-                                    
+                dados["elementos"].append(elemento)                                                        
+                    
+                    
             if (treemap):
                 
                 dados_str = json.dumps({
                     "titulo":titulo,
-                    "qtd_registros": str(df[coluna_cluster].count()),
+                    "qtd_registros": str(quantidade_total_registros),
                     "nuvens":dados
                 })
                 display(HTML(FerramentasLinguagemNatural.html_template.substitute({'script_nuvem_palavras_treemap':FerramentasLinguagemNatural.html_nuvem_palavras_treemap, 'dados':dados_str})))
 
                 
-            elif not imagens_separadas:
                 
-                quantidade_colunas = 4
-                quantidade_linhas = int(math.ceil(quantidade_clusters / quantidade_colunas))
-
-                fig = plt.figure(figsize=(16,24))
-
-                fig.suptitle("Nuvem de palavras dos Clusters", fontsize=20)                
+            else:                                                                
                 
-                for elemento in dados["elementos"]:
-                    
-                    ax = fig.add_subplot(quantidade_linhas, quantidade_colunas, elemento["id"]+1)
-                    ax.set_title(elemento["titulo"])
-                    plt.imshow(elemento["imagem"], interpolation="bilinear")
-                    ax.axis("off")
-
-                fig.tight_layout(pad=1.5)
-                fig.patch.set_facecolor('white')
+                dados["elementos"].sort (reverse=True, key= lambda elemento: elemento["qtd_registros"])                                
                 
-                plt.show()                                                            
-            
-            
-            else:
-                                
-                for elemento in dados["elementos"]:
-                    
-                    fig, ax = plt.subplots(figsize=(5, 4))
-                    ax.set_title(elemento["titulo"])
+                if not imagens_separadas:
+                
+                    #TODO: Não está exibindo na orde correta
+                    quantidade_colunas = 4
+                    quantidade_linhas = int(math.ceil(quantidade_clusters / quantidade_colunas))
+
+                    fig = plt.figure(figsize=(16,24))
+
+                    fig.suptitle("Nuvem de palavras dos Clusters", fontsize=20)                
+
+                    for elemento in dados["elementos"]:
+
+                        ax = fig.add_subplot(quantidade_linhas, quantidade_colunas, elemento["id"]+1)
+                        ax.set_title(f'{elemento["titulo"]} ({("%.1f" % (elemento["percentual_registros"]*100))}% - {elemento["qtd_registros"]} registros)')
+                        plt.imshow(elemento["imagem"], interpolation="bilinear")
+                        ax.axis("off")
+
+                    fig.tight_layout(pad=1.5)
                     fig.patch.set_facecolor('white')
-                    plt.imshow(elemento["imagem"], interpolation="bilinear")                            
-                    plt.axis('off')                    
-                    plt.show() 
+
+                    plt.show()                                                            
+
+
+                else:
+
+                    for elemento in dados["elementos"]:                                                
+                        
+                        fig, ax = plt.subplots(figsize=(5, 4))
+                        ax.set_title(f'{elemento["titulo"]} ({("%.1f" % (elemento["percentual_registros"]*100))}% - {elemento["qtd_registros"]} registros)')
+                        fig.patch.set_facecolor('white')
+                        plt.imshow(elemento["imagem"], interpolation="bilinear")                            
+                        plt.axis('off')                    
+                        plt.show() 
                      
         
         
