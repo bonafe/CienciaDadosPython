@@ -553,8 +553,8 @@ class FerramentasLinguagemNatural:
                 elemento = {
                     "id":cluster_atual,
                     "titulo": f'Cluster {cluster_atual}',
-                    "qtd_registros": quantidade_registros_cluster_atual,
-                    "percentual_registros": quantidade_registros_cluster_atual / quantidade_total_registros
+                    "qtd_registros": int(quantidade_registros_cluster_atual),
+                    "percentual_registros": float(quantidade_registros_cluster_atual / quantidade_total_registros)
                 }
                 
                 if (treemap):                    
