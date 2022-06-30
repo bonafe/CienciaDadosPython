@@ -383,11 +383,12 @@ class VisualizadorDataFrames:
                         nuvem_palavras = None
                         
                         
-                        try:
-                            nuvem_palavras = VisualizadorDataFrames.gerar_nuvem_palavras(texto_coluna)
-                            
-                        except ValueError as error:
-                            
+                        #try:
+                        #    nuvem_palavras = VisualizadorDataFrames.gerar_nuvem_palavras(texto_coluna)
+                        #    
+                        #except ValueError as error:
+                        #TODO: Voltar Nuvem Palavras
+                        if True:
                             contagem = df[chave].value_counts()
                             contagem.index = contagem.index.map(str)
                             nuvem_palavras = WordCloud().generate_from_frequencies(contagem)
